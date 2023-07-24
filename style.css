@@ -1,0 +1,73 @@
+*,*::before,*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root{
+  --cell-size: 100px;
+}
+
+.board {
+  height: 100vh;
+  width: 100vw; 
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  place-content: center;
+}
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.cell:first-child, .cell:nth-child(2), .cell:nth-child(3) {
+  border-top: none;
+}
+.cell:nth-child(3n + 1) {
+  border-left: none;
+}
+.cell:nth-child(3n + 3) {
+  border-right: none;
+}
+.cell:last-child, .cell:nth-last-child(2), .cell:nth-last-child(3) {
+  border-bottom: none;
+}
+
+.cell.x, .cell.o {
+  cursor: not-allowed;
+}
+
+.cell.x::before, .cell.x::after, .board.x .cell:not(.o):hover::before, .board.x .cell:not(.o):hover::after {
+  content: '';
+  height: calc(var(--cell-size) * .8);
+  width: calc(var(--cell-size) * .05);
+  background-color: black;
+  position: absolute;
+}
+.cell.x::before, .board.x .cell:hover::before {
+  transform: rotate(45deg);
+}
+.cell.x::after, .board.x .cell:hover::after {
+  transform: rotate(-45deg);
+}
+
+.board.x .cell:not(.x, .o):hover::before, .board.x .cell:not(.x, .o):hover::after {
+  background-color: grey;
+}
+
+.cell.o::before, .board.o .cell:not(.x):hover::before {
+  content: '';
+  height: calc(var(--cell-size) * .7);
+  width: calc(var(--cell-size) * .7);
+  border-radius: 50%;
+  border: 5px solid black;
+}
+.board.o .cell:not(.x, .o):hover::before {
+  border-color: grey;
+}
